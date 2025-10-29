@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/0de0529c5f.js" crossorigin="anonymous"></script>
+    <script src="./javas.js"></script>
+    <link rel="icon" href="./images/titlepage logo.png" type="image/icon type">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <title>IRCTC Next Generation eTicketing System</title>
+</head>
+<body>
+    <header id="main-header">
+        <div id="img1"><img src="https://www.irctc.co.in/nget/assets/images/secondry-logo.png" alt="irctc logo"></div>
+        <div id="linklists" style="display: flex; flex-direction: column; gap: 0.1rem; flex-grow: 1; max-width: 900px; margin: 0 1rem;">
+            <div id="links1" style="display: flex; justify-content: center;">
+                <ul class="horizontal-list center" style="display: flex; flex-wrap: wrap; gap: 0.2rem; margin: 0; padding: 0; list-style: none; justify-content: center; max-width: 100%;">
+                    <li class="blue-bold" style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="#">LOGIN</a></li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="https://www.irctc.co.in/nget/profile/user-registration">REGISTER</a></li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="https://agent.irctc.co.in/nget/train-search">AGENT LOGIN</a></li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="#">CONTACT US</a></li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="#">ASK DISHA</a></li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="https://www.irctc.co.in/nget/enquiry/alerts"><strong>ALERTS</strong></a></li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;">  
+                        <span id="datetime" style="font-weight: bold;"></span>
+                        <script src="javas.js"></script>
+                    </li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;">
+                        <button class="btn" onclick="decreaseFontSize()" style="font-size: 0.8rem; padding: 0.1rem 0.3rem; margin: 0 0.1rem;">A-</button>
+                        <button class="btn" onclick="resetFontSize()" style="font-size: 0.8rem; padding: 0.1rem 0.3rem; margin: 0 0.1rem;">A</button>
+                        <button class="btn" onclick="increaseFontSize()" style="font-size: 0.8rem; padding: 0.1rem 0.3rem; margin: 0 0.1rem;">A+</button>
+                    </li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><button class="btn" style="font-size: 0.85rem; padding: 0.1rem 0.3rem;">हिन्दी</button></li>
+                </ul>
+            </div>
+            <div id="links2" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 0.15rem;">
+                <div class="dropdown">
+                    <a href="./index.html"><span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;"><i class="fa-solid fa-house"></i></span></a>
+                </div>
+                <div class="dropdown">
+                    <span class="blue-bold" style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">IRCTC EXCLUSIVE</span>
+                    <div class="dropdown-content">
+                        <div class="dropdown-option">IRCTC eWallet</div>
+                        <div class="dropdown-option">IRCTC-iPAY</div>
+                        <div class="dropdown-option">e-Gift Vouchers</div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <span class="orange-underline" style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">TRAINS</span>
+                    <div class="dropdown-content">
+                        <div class="dropdown-option">Book Ticket</div>
+                        <div class="dropdown-option">Foreign Tourist Booking</div>
+                        <div class="dropdown-option">Connecting Journey Booking</div>
+                        <div class="dropdown-option">IRCTC Trains</div>
+                        <div class="dropdown-option">Cancel Ticket</div>
+                        <div class="dropdown-option">PNR Enquiry</div>
+                        <div class="dropdown-option">Train Schedule</div>
+                        <div class="dropdown-option">Track Your Train</div>
+                        <div class="dropdown-option">FTR Coach/Train Booking</div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="https://www.bus.irctc.co.in/home" target="_blank"><span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">BUSES</span></a>
+                </div>
+                <div class="dropdown">
+                    <a href="https://www.air.irctc.co.in/" target="_blank"><span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">FLIGHTS</span></a>
+                </div>
+                <div class="dropdown">
+                    <a href="https://www.hotel.irctctourism.com/hotel" target="_blank"><span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">HOTELS</span></a>
+                </div>
+                <div class="dropdown">
+                    <span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">HOLIDAYS</span>
+                    <div class="dropdown-content">
+                        <div class="dropdown-option">Tourist Trains</div>
+                        <div class="dropdown-option">Tour Packages</div>
+                        <div class="dropdown-option">Stays</div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">LOYALTY</span>
+                    <div class="dropdown-content">
+                        <div class="dropdown-option">IRCTC SBI Credit Card</div>
+                        <div class="dropdown-option">IRCTC BOB Credit Card</div>
+                        <div class="dropdown-option">IRCTC HDFC Credit Card</div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">MEALS</span>
+                    <div class="dropdown-content">
+                        <div class="dropdown-option">Order Food - E-Catering</div>
+                        <div class="dropdown-option">Cooked Food Menu</div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">PROMOTIONS</span>
+                    <div class="dropdown-content">
+                        <div class="dropdown-option">Suboption </div>
+                        <div class="dropdown-option">Suboption </div>
+                        <div class="dropdown-option">Suboption </div>
+                        <div class="dropdown-option">Suboption </div>
+                        <div class="dropdown-option">Suboption </div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">MORE</span>
+                    <div class="dropdown-content">
+                        <div class="dropdown-option">Suboption </div>
+                        <div class="dropdown-option">Suboption </div>
+                        <div class="dropdown-option">Suboption </div>
+                        <div class="dropdown-option">Suboption </div>
+                        <div class="dropdown-option">Suboption </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="img2"><img src="https://www.irctc.co.in/nget/assets/images/logo.png" alt="irctc logo"></div>
+    </header>
+    <main>
+    <section id="ticket-booking">
+        <div id="form">
+            <header>
+                <div id="pnr-status">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                    <a href="https://www.indianrail.gov.in/enquiry/PNR/PnrEnquiry.html?locale=en" target="_blank">PNR STATUS</a>
+                </div>
+                <div id="charts">
+                    <i class="fa-sharp fa-solid fa-clipboard-list"></i>
+                    <a href="https://www.irctc.co.in/online-charts/" target="_blank">CHARTS/VACANCY</a>
+                </div>
+            </header>
+            <main>
+                <header>
+                    <img src="https://www.irctc.co.in/nget/assets/images/logo_top_eng.jpg" alt="independence logo" style="height: 40px;">
+                    <h2>🎫 BOOK TICKET</h2>
+                    <img src="https://www.irctc.co.in/nget/assets/images/G20_Logo.png" alt="g2 logo" style="height: 40px;">
+                </header>
+                <form method="get" action="#">
+                    <div>
+                    <input id="from" name="from" type="text" placeholder="🚉 From Station" class="leftbox" autofocus>
+                    <input id="to" name="to" type="text" placeholder="🏁 To Station" class="leftbox">
+                    <input id="date" name="date" type="date" class="rightbox">
+                    <select id="class" name="class" class="rightbox">
+                        <option value="all" selected>All Classes</option>
+                        <option value="anubhuti">Anubhuti Class (EA)</option>
+                        <option value="all" >AC First Class (1A)</option>
+                        <option value="all" >Vistadome AC (EV)</option>
+                        <option value="all" >Exec. Chair Car (EC)</option>
+                        <option value="all" >AC 2 Tier (2A)</option>
+                        <option value="all" >First Class (FC)</option>
+                        <option value="all" >AC 3 Tier (3A)</option>
+                        <option value="all" >AC 3 Economy (3E)</option>
+                        <option value="all" >Vistadome Chair Car (VC)</option>
+                        <option value="all" >AC Chair Car (CC)</option>
+                        <option value="all" >Sleeper (SL)</option>
+                        <option value="all" >Vistadome Non AC (VS)</option>
+                        <option value="all" >Second Sitting (2S)</option>
+                    </select>
+                    <select id="quota" name="quota" class="leftbox">
+                        <option value="general" selected>GENERAL</option>
+                        <option value="ladies">LADIES</option>
+                        <option value="lower-berth" >LOWER BERTH/SR.CITIZEN</option>
+                        <option value="pwd" >PERSON WITH DISABILITY</option>
+                        <option value="tatkal" >TATKAL</option>
+                        <option value="premium-tatkal" >PREMIUM TATKAL</option>
+                    </select>
+                </div>
+                <div id="checkboxes">
+                    <label><input id="pwd-concession" name="pwd-concession" type="checkbox" value="pwd-concession">Person With Disability Concession</label>
+                    <label><input id="flexi-date" name="flexi-date" type="checkbox" value="flexi-date">Flexible With Date</label>
+                    <label><input id="berth-available" name="berth-available" type="checkbox" value="berth-available">Train With Available Berth</label>
+                    <label><input id="railway-pass" name="railway-pass" type="checkbox" value="railway-pass">Railway Pass Concession</label>
+                </div>
+                <div id="buttons">
+                    <button type="submit">🔍 Search Trains</button>
+                    <button type="button">🤖 Ask DISHA 2.0</button> 
+                </div>
+                </form>
+            </main>
+            <div id="note">
+                <p id="p1">Customers are requested to contact only on IRCTC's authorised contact no./Email id (Contact No.:14646 OR 0755-6610661 / 0755-4090600, Email: care@irctc.co.in), for assistance regarding ticket booking, refund or forgot user-id/password. Beware of fraudulent sites offering assistance.</p>
+                <p id="p2">Please check the alert section regarding restoration of AC 3-tier economy fare.</p>
+            </div>
+        </div>
+        <div id="ticket-booking-heading">
+            <h1>INDIAN RAILWAYS</h1>
+            <h2>Safety | Security | Punctuality</h2>
+        </div>
+    </section>
+    <section id="service">
+        <div class="divider"></div>
+        <header class="center">
+            <h1>Have you not found the right one?</h1>
+            <h1>Find a service suitablel for you here.</h1>
+        </header>
+        <main id="icons" >
+                <div><a href="https://www.air.irctc.co.in/" target="_blank"><i class="fa-solid fa-plane"></i></a><p>FLIGHTS</p></div>
+                <div><a href="https://hotel.irctctourism.com/hotel" target="_blank"><i class="fa-solid fa-hotel"></i></a><p>HOTELS</p></div>
+                <div><a href="https://raildrishti.indianrailways.gov.in/raildrishti/raildrishtiv3/" target="_blank"><i class="fa-solid fa-chart-line"></i></a><p>RAIL DRISHTI</p></div>
+                <div><a href="https://www.ecatering.irctc.co.in/" target="_blank"><i class="fa-solid fa-bell-concierge"></i></a><p>E-CATERING</p></div>
+                <div><a href="https://www.bus.irctc.co.in/home" target="_blank"><i class="fa-solid fa-bus"></i></a><p>BUS</p></div>
+                <div><a href="https://www.irctctourism.com/tourpacakage_search?searchKey=&tagType=&travelType=&category=" target="_blank"><i class="fa-solid fa-umbrella-beach"></i></a><p>HOLIDAY PACKAGES</p></div>
+                <div><a href="https://www.irctctourism.com/bharatgaurav" target="_blank"><i class="fa-solid fa-train-subway"></i></a><p>TOURIST TRAIN</p></div>
+                <div><a href="https://www.irctctourism.com/gallery/" target="_blank"><i class="fa-solid fa-mountain"></i></a><p>HILL RAILWAYS</p></div>
+                <div><a href="https://www.ftr.irctc.co.in/ftr/" target="_blank"><i class="fa-solid fa-train-tram"></i></a><p>CHARTER TRAIN</p></div>
+                <div><a href="https://www.irctctourism.com/gallery/" target="_blank"><i class="fa-solid fa-mountain-sun"></i></a><p>GALLERY</p></div>
+        </main>
+        <div style="text-align: center; margin: 2rem auto; max-width: 800px;">
+            <img src="https://contents.irctc.co.in/en/GPT_NWEB_HOME_CENTER.jpeg" alt="mata vaishno devi image" style="width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+        </div>
+    </section>
+    <section id="holidays">
+        <div class="divider"></div>
+        <header>
+            <h1 class="center">HOLIDAYS</h1>
+        </header>
+        <div id="packages">
+            <div>
+                <img src="https://www.irctc.co.in/nget/assets/images/exterior.jpg" alt="image">
+                <div>
+                    <h2>Maharajas' Express</h2>
+                    <p>Redefining Royalty, Luxury and Comfort, Maharajas' express takes you on a sojourn to the era of bygone stately splendour of princely states. Sylvan furnishings, elegant ambience and modern amenities are amalgamated for an “Experience Unsurpassed”. It has been a winner of “World’s Leading Luxury train” by World Travel Awards consecutively for last six years.                    </p>
+                    <p><a href="https://www.the-maharajas.com/" target="_blank">Read More<i class="fa-sharp fa-solid fa-arrow-right"></i></a></p>
+                </div>
+            </div>
+            <div>
+                <img src="https://www.irctc.co.in/nget/assets/images/Thailand.jpg" alt="image">
+                <div>
+                    <h2>International Packages</h2>
+                    <p>Best deals in International Holiday packages, handpicked by IRCTC, for Thailand, Dubai, Sri Lanka, Hong Kong, China, Macau, Bhutan, Nepal, U.K., Europe, USA, Australia etc. The packages are inclusive of sightseeing, meals, visa charges and overseas medical insurance to give you a hassle-free and memorable experience.                    </p>
+                    <p><a href="https://www.the-maharajas.com/" target="_blank">Read More<i class="fa-sharp fa-solid fa-arrow-right"></i></a></p>
+                </div>
+            </div>
+            <div>
+                <img src="https://www.irctc.co.in/nget/assets/images/Kashmir.jpg" alt="image">
+                <div >
+                    <h2>Domestic Air Packages</h2>
+                    <p>Be it the spiritual devotee seeking blessings of Tirupati, Shirdi or Mata Vaishno Devi or the leisure traveller wanting to relish the Blue mountains of North East, Sand-dunes of Rajasthan, Hamlets of Ladakh, Wonders of Himalayas, Serene lakes or Picturesque Islands, IRCTC has it all. Discover India through IRCTC!                    </p>
+                    <p><a href="https://www.the-maharajas.com/" target="_blank">Read More<i class="fa-sharp fa-solid fa-arrow-right"></i></a></p>
+                </div>
+            </div>
+            <div>
+                <img src="https://www.irctc.co.in/nget/assets/images/Bharat_Gaurav.jpg" alt="image">
+                <div >
+                    <h2>Bharat Gaurav Tourist Train</h2>
+                    <p>IRCTC operates Bharat Gaurav Tourist Train having AC III-Tier accommodation on train specially designed to promote domestic tourism in India. This train runs on various theme based circuits covering pilgrimage and heritage destinations in its itinerary on a 5 days to 20 days trip and showcase India’s rich cultural heritage.                    </p>
+                    <p><a href="https://www.the-maharajas.com/" target="_blank">Read More<i class="fa-sharp fa-solid fa-arrow-right"></i></a></p>
+                </div>
+                <!-- made by Aditya Jindal -->
+            </div>
+            <div>
+                <img src="https://www.irctc.co.in/nget/assets/images/Manali.jpg" alt="image">
+                <div >
+                    <h2>Rail Tour Packages</h2>
+                    <p>IRCTC offers Exclusive Rail tour packages with confirmed train tickets, sight-seeing and meals for enchanting Nilgiri Mountains, Darjeeling, Kullu Manali, Kashmir, Gangtok or divine tours of Mata Vaishno Devi, Rameswaram, Madurai, Shirdi, Tirupati etc. Holiday packages/ Land packages to these destinations are also available.                    </p>
+                    <p><a href="https://www.the-maharajas.com/" target="_blank">Read More<i class="fa-sharp fa-solid fa-arrow-right"></i></a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="socials" style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 3rem 2rem; text-align: center;">
+        <p style="color: white; font-size: 1.25rem; font-weight: 600; margin-bottom: 2rem;">Get Connected with us on social networks</p>
+        <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;">
+            <a href="https://www.facebook.com/IRCTCofficial/" target="_blank" style="background: #1877f2; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);" onmouseover="this.style.transform='translateY(-5px) scale(1.1)'" onmouseout="this.style.transform='translateY(0) scale(1)'"><i class="fa-brands fa-facebook-f" style="font-size: 1.5rem;"></i></a>
+            <a href="https://www.youtube.com/c/IRCTCOFFICIAL" target="_blank" style="background: #ff0000; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);" onmouseover="this.style.transform='translateY(-5px) scale(1.1)'" onmouseout="this.style.transform='translateY(0) scale(1)'"><i class="fa-brands fa-youtube" style="font-size: 1.5rem;"></i></a>
+            <a href="https://www.instagram.com/irctc.official/?igshid=yyg5byow704l" target="_blank" style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);" onmouseover="this.style.transform='translateY(-5px) scale(1.1)'" onmouseout="this.style.transform='translateY(0) scale(1)'"><i class="fa-brands fa-instagram" style="font-size: 1.5rem;"></i></a>
+            <a href="https://www.linkedin.com/company/irctcofficial" target="_blank" style="background: #0077b5; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);" onmouseover="this.style.transform='translateY(-5px) scale(1.1)'" onmouseout="this.style.transform='translateY(0) scale(1)'"><i class="fa-brands fa-linkedin-in" style="font-size: 1.5rem;"></i></a>
+            <a href="https://t.me/IRCTC_Official" target="_blank" style="background: #0088cc; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);" onmouseover="this.style.transform='translateY(-5px) scale(1.1)'" onmouseout="this.style.transform='translateY(0) scale(1)'"><i class="fa-brands fa-telegram" style="font-size: 1.5rem;"></i></a>
+            <a href="https://in.pinterest.com/irctcofficial/" target="_blank" style="background: #bd081c; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);" onmouseover="this.style.transform='translateY(-5px) scale(1.1)'" onmouseout="this.style.transform='translateY(0) scale(1)'"><i class="fa-brands fa-pinterest" style="font-size: 1.5rem;"></i></a>
+            <a href="https://www.tumblr.com/irctcofficial" target="_blank" style="background: #001935; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);" onmouseover="this.style.transform='translateY(-5px) scale(1.1)'" onmouseout="this.style.transform='translateY(0) scale(1)'"><i class="fa-brands fa-tumblr" style="font-size: 1.5rem;"></i></a>
+            <a href="https://twitter.com/IRCTCofficial" target="_blank" style="background: #000000; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);" onmouseover="this.style.transform='translateY(-5px) scale(1.1)'" onmouseout="this.style.transform='translateY(0) scale(1)'"><i class="fa-brands fa-x-twitter" style="font-size: 1.5rem;"></i></a>
+            <a href="https://wa.me/919876543210" target="_blank" style="background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);" onmouseover="this.style.transform='translateY(-5px) scale(1.1)'" onmouseout="this.style.transform='translateY(0) scale(1)'"><i class="fa-brands fa-whatsapp" style="font-size: 1.5rem;"></i></a>
+        </div>
+    </section>
+    
+    <section id="all-links">
+        <div>
+            <ul>
+              <li onclick="toggleList('hiddenList1','button1')">IRCTC Trains
+                <span id="button1">▾</span></li>
+            </ul>
+            <ul id="hiddenList1" class="hidden">
+              <li>Suboption 1 </li>
+              <li>Suboption 2 </li>
+              <li>Suboption 3 </li>
+            </ul>
+          </div>
+          
+          <div>
+            <ul>
+              <li onclick="toggleList('hiddenList2','button2')">How To<span id="button2">▾</span></li>
+            </ul>
+            <ul id="hiddenList2" class="hidden">
+              <li>Suboption 1 </li>
+              <li>Suboption 2 </li>
+              <li>Suboption 3 </li>
+            </ul>
+          </div>
+          
+          
+          <div>
+            <ul>
+              <li onclick="toggleList('hiddenList3','button3')">IRCTC eWallet<span id="button3">▾</span></li>
+            </ul>
+            <ul id="hiddenList3" class="hidden">
+              <li>Suboption 1 </li>
+              <li>Suboption 2 </li>
+              <li>Suboption 3 </li>
+            </ul>
+          </div>
+          
+          
+          <div>
+            <ul>
+              <li onclick="toggleList('hiddenList4','button4')">For Newly Migrated Agents<span id="button4">▾</span></li>
+            </ul>
+            <ul id="hiddenList4" class="hidden">
+              <li>Suboption 1 </li>
+              <li>Suboption 2 </li>
+              <li>Suboption 3 </li>
+            </ul>
+          </div>
+          
+          <div>
+            <ul>
+              <li onclick="toggleList('hiddenList5','button5')">General Information<span id="button5">▾</span></li>
+            </ul>
+            <ul id="hiddenList5" class="hidden">
+              <li>Suboption 1 </li>
+              <li>Suboption 2 </li>
+              <li>Suboption 3 </li>
+            </ul>
+          </div>
+          
+          <div>
+            <ul>
+              <li onclick="toggleList('hiddenList6','button6')">IRCTC Official App<span id="button6">▾</span></li>
+            </ul>
+            <ul id="hiddenList6" class="hidden">
+              <li>Suboption 1 </li>
+              <li>Suboption 2 </li>
+              <li>Suboption 3 </li>
+            </ul>
+          </div>
+          
+          <div>
+            <ul>
+              <li onclick="toggleList('hiddenList7','button7')">IRCTC Loyalty Program<span id="button7">▾</span></li>
+            </ul>
+            <ul id="hiddenList7" class="hidden">
+              <li>Suboption 1 </li>
+              <li>Suboption 2 </li>
+              <li>Suboption 3 </li>
+            </ul>
+          </div>
+          
+          <div>
+            <ul>
+              <li onclick="toggleList('hiddenList8','button8')">Mobile Zone<span id="button8">▾</span></li>
+            </ul>
+            <ul id="hiddenList8" class="hidden">
+              <li>Suboption 1 </li>
+              <li>Suboption 2 </li>
+              <li>Suboption 3 </li>
+            </ul>
+          </div>
+          
+          <div>
+            <ul>
+              <li onclick="toggleList('hiddenList9','button9')">Important Information<span id="button9">▾</span></li>
+            </ul>
+            <ul id="hiddenList9" class="hidden">
+              <li>Suboption 1 </li>
+              <li>Suboption 2 </li>
+              <li>Suboption 3 </li>
+            </ul>
+          </div>
+          
+          <div>
+            <ul>
+              <li onclick="toggleList('hiddenList10','button10')">Advertise with us<span id="button10">▾</span></li>
+            </ul>
+            <ul id="hiddenList10" class="hidden">
+              <li>Suboption 1 </li>
+              <li>Suboption 2 </li>
+              <li>Suboption 3 </li>
+            </ul>
+          </div>
+          
+          <div>
+            <ul>
+              <li onclick="toggleList('hiddenList11','button11')">IRCTC-iPAY Payment Gateway<span id="button11">▾</span></li>
+            </ul>
+            <ul id="hiddenList11" class="hidden">
+              <li>Suboption 1 </li>
+              <li>Suboption 2 </li>
+              <li>Suboption 3 </li>
+            </ul>
+          </div>
+            <div>
+            <ul>
+                <li onclick="toggleList('hiddenList12','button12')">Policies<span id="button12">▾</span></li>
+            </ul>
+            <ul id="hiddenList12" class="hidden">
+                <li>Suboption 1 </li>
+                <li>Suboption 2 </li>
+                <li>Suboption 3 </li>
+            </ul>
+            </div>
+            
+            
+            <div>
+            <ul>
+                <li onclick="toggleList('hiddenList13','button13')">Agents<span id="button13">▾</span></li>
+            </ul>
+            <ul id="hiddenList13" class="hidden">
+                <li>Suboption 1 </li>
+                <li>Suboption 2 </li>
+                <li>Suboption 3 </li>
+            </ul>
+            </div>
+            
+            
+            <div>
+            <ul>
+                <li onclick="toggleList('hiddenList14','button14')">Refund Rules<span id="button14">▾</span></li>
+            </ul>
+            <ul id="hiddenList14" class="hidden">
+                <li>Suboption 1 </li>
+                <li>Suboption 2 </li>
+                <li>Suboption 3 </li>
+            </ul>
+            </div>
+            
+            <div>
+            <ul>
+                <li onclick="toggleList('hiddenList15','button15')">IRCTC Zone<span id="button15">▾</span></li>
+            </ul>
+            <ul id="hiddenList15" class="hidden">
+                <li>Suboption 1 </li>
+                <li>Suboption 2 </li>
+                <li>Suboption 3 </li>
+            </ul>
+            </div>
+            
+            <div>
+            <ul>
+                <li onclick="toggleList('hiddenList16','button16')">Ask Disha ChatBot<span id="button16">▾</span></li>
+            </ul>
+            <ul id="hiddenList16" class="hidden">
+                <li>Suboption 1 </li>
+                <li>Suboption 2 </li>
+                <li>Suboption 3 </li>
+            </ul>
+            </div>
+            
+            <div>
+            <ul>
+                <li onclick="toggleList('hiddenList17','button17')">Enquiries<span id="button17">▾</span></li>
+            </ul>
+            <ul id="hiddenList17" class="hidden">
+                <li>Suboption 1 </li>
+                <li>Suboption 2 </li>
+                <li>Suboption 3 </li>
+            </ul>
+            </div>
+            
+            <div>
+            <ul>
+                <li onclick="toggleList('hiddenList18','button18')">Person With Disability Facilities<span id="button18">▾</span></li>
+            </ul>
+            <ul id="hiddenList18" class="hidden">
+                <li>Suboption 1 </li>
+                <li>Suboption 2 </li>
+                <li>Suboption 3 </li>
+            </ul>
+            </div>
+            
+            <div>
+            <ul>
+                <li onclick="toggleList('hiddenList19','button19')">About us<span id="button19">▾</span></li>
+            </ul>
+            <ul id="hiddenList19" class="hidden">
+                <li>Suboption 1 </li>
+                <li>Suboption 2 </li>
+                <li>Suboption 3 </li>
+            </ul>
+            </div>
+
+    </section>
+        <section id="sponsors">
+        <div id="images">
+            <img src="https://www.irctc.co.in/nget/assets/images/security.png">
+        </div>
+        <div id="copyright-info">
+            <p>Copyright Â© 2023 - www.irctc.co.in. All Rights Reserved</p>
+            <p>Designed and Hosted by <a href="https://cris.org.in/crisweb/design1/index.jsp">CRIS</p>
+            <p><a href="http://contents.irctc.co.in/en/BetaSiteCompatibleBrowser.html">Compatible Browsers</a></p>
+        </div>
+    </section>
+</main>
+</body>
+</html>
