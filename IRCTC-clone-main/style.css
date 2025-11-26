@@ -17,14 +17,17 @@ body {
     padding: 0.3rem 2rem;
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     width: 100%;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 2147483646;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 0.3rem;
+    backdrop-filter: blur(10px);
 }
 
 #main-header img {
@@ -63,6 +66,8 @@ body {
     color: white;
     text-decoration: none;
     font-weight: 500;
+    cursor: pointer;
+    display: block;
 }
 
 #links2 {
@@ -74,6 +79,7 @@ body {
 
 .dropdown {
     position: relative;
+    z-index: 2147483647;
 }
 
 .dropdown span {
@@ -84,23 +90,40 @@ body {
     cursor: pointer;
     font-weight: 500;
     font-size: 0.8rem;
+    background: rgba(255,255,255,0.1);
+    display: block;
+    text-decoration: none;
+}
+
+.dropdown a {
+    text-decoration: none !important;
+    color: inherit;
+}
+
+.dropdown a:hover {
+    text-decoration: none !important;
+}
+
+.dropdown a span {
+    text-decoration: none !important;
 }
 
 .dropdown:hover span {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.3);
 }
 
 .dropdown-content {
     display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
+    position: fixed;
+    top: auto;
+    left: auto;
     background: white;
-    min-width: 200px;
+    min-width: 220px;
     border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    z-index: 1001;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    z-index: 2147483647;
     overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.1);
 }
 
 .dropdown:hover .dropdown-content {
@@ -118,26 +141,35 @@ body {
     border-bottom: 1px solid #f1f1f1;
     transition: all 0.3s ease;
     cursor: pointer;
+    background: white;
+    color: #374151;
+    font-weight: 500;
 }
 
 .dropdown-option:hover {
-    background: #eff6ff;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
     color: #1e40af;
+    transform: translateX(5px);
+}
+
+.dropdown-option:last-child {
+    border-bottom: none;
 }
 
 /* Ticket Booking Section */
 #ticket-booking {
-    margin-top: 60px;
+    margin-top: 120px;
     background: linear-gradient(135deg, rgba(30, 64, 175, 0.7), rgba(59, 130, 246, 0.6)), url('./images/train image.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    min-height: 70vh;
+    min-height: calc(100vh - 120px);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 3rem 2rem;
     position: relative;
+    z-index: 1;
 }
 
 #form {
@@ -285,6 +317,16 @@ button[type="button"]:hover {
     box-shadow: 0 10px 25px rgba(0, 210, 255, 0.3);
 }
 
+.voice-call-btn {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    color: white !important;
+}
+
+.voice-call-btn:hover {
+    background: linear-gradient(135deg, #059669, #047857) !important;
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3) !important;
+}
+
 #note {
     background: #eff6ff;
     padding: 1.5rem;
@@ -327,7 +369,7 @@ button[type="button"]:hover {
 
 /* Services Section */
 #service {
-    padding: 4rem 2rem;
+    padding: 2rem 2rem;
     background: white;
 }
 
@@ -335,7 +377,7 @@ button[type="button"]:hover {
     text-align: center;
     font-size: 2.5rem;
     font-weight: 700;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
     color: #2d3748;
 }
 
@@ -552,50 +594,392 @@ li[onclick]:hover {
     font-weight: 600;
 }
 
-/* Responsive */
+/* Enhanced DISHA Button */
+.disha-btn {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    color: white !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.disha-btn:hover {
+    background: linear-gradient(135deg, #059669, #047857) !important;
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3) !important;
+    transform: translateY(-2px);
+}
+
+.disha-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.disha-btn:hover::before {
+    left: 100%;
+}
+
+/* Improved Mobile Responsiveness */
+@media (max-width: 1024px) {
+    #main-header {
+        padding: 0.5rem 1rem;
+    }
+    
+    #links1 .horizontal-list {
+        gap: 0.3rem;
+    }
+    
+    #links1 li {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    #links2 {
+        gap: 0.2rem;
+    }
+    
+    .dropdown span {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+}
+
 @media (max-width: 768px) {
     #main-header {
         flex-direction: column;
         padding: 0.5rem;
+        position: relative;
+    }
+    
+    #main-header img {
+        height: 30px;
+    }
+    
+    #linklists {
+        width: 100%;
+        max-width: none;
+    }
+    
+    #links1 .horizontal-list {
+        justify-content: center;
+        gap: 0.2rem;
+    }
+    
+    #links1 li {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.4rem;
+    }
+    
+    #links2 {
+        justify-content: center;
+        gap: 0.15rem;
+    }
+    
+    .dropdown span {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.4rem;
     }
     
     #ticket-booking {
         flex-direction: column;
         text-align: center;
-        margin-top: 120px;
+        margin-top: 140px;
+        padding: 2rem 1rem;
+        min-height: calc(60vh - 140px);
     }
     
     #form {
         margin-bottom: 2rem;
+        padding: 1.5rem;
+        max-width: 100%;
     }
     
     #form main form div {
         grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .leftbox, .rightbox {
+        padding: 0.75rem;
+        font-size: 0.9rem;
     }
     
     #buttons {
         flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    button {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    #ticket-booking-heading {
+        order: -1;
+        margin-bottom: 2rem;
+        text-align: center;
     }
     
     #ticket-booking-heading h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    #ticket-booking-heading h2 {
+        font-size: 1.2rem;
+    }
+    
+    #service header h1 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    #icons {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    #icons div {
+        padding: 1.5rem 0.5rem;
+    }
+    
+    #icons i {
         font-size: 2.5rem;
+    }
+    
+    #icons p {
+        font-size: 0.8rem;
+    }
+    
+    #holidays header h1 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    #packages {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    #packages img {
+        height: 180px;
+    }
+    
+    #packages > div > div {
+        padding: 1rem;
+    }
+    
+    #packages h2 {
+        font-size: 1.25rem;
     }
     
     #all-links {
         grid-template-columns: 1fr;
+        padding: 2rem 1rem;
     }
     
     #sponsors {
         flex-direction: column;
         gap: 1rem;
         text-align: center;
+        padding: 1.5rem;
+    }
+    
+    #socials {
+        padding: 1.5rem;
+    }
+    
+    #socials p {
+        font-size: 1rem;
     }
 }
 
+@media (max-width: 480px) {
+    #main-header {
+        padding: 0.3rem;
+    }
+    
+    #links1 li, .dropdown span {
+        font-size: 0.65rem;
+        padding: 0.15rem 0.3rem;
+    }
+    
+    #ticket-booking {
+        padding: 1.5rem 0.5rem;
+        margin-top: 160px;
+        min-height: calc(50vh - 160px);
+    }
+    
+    #form {
+        padding: 1rem;
+        margin: 0 0.5rem 1.5rem;
+    }
+    
+    #form main h2 {
+        font-size: 1.5rem;
+    }
+    
+    .leftbox, .rightbox {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+    }
+    
+    button {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    #ticket-booking-heading h1 {
+        font-size: 1.75rem;
+    }
+    
+    #ticket-booking-heading h2 {
+        font-size: 1rem;
+    }
+    
+    #icons {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    #icons div {
+        padding: 1rem 0.5rem;
+    }
+    
+    #icons i {
+        font-size: 2rem;
+    }
+    
+    #service header h1, #holidays header h1 {
+        font-size: 1.75rem;
+    }
+    
+    #packages img {
+        height: 150px;
+    }
+}
+
+/* Utility Classes */
 .center { text-align: center; }
 .horizontal-list { list-style: none; }
 .blue-bold { background: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 5px; }
 .blue-bold a { color: white; text-decoration: none; }
 .divider { height: 1px; background: #e2e8f0; margin: 2rem 0; }
 .hidden { display: none; }
-.btn { padding: 0.5rem; margin: 0 0.25rem; border: 1px solid #e2e8f0; background: white; cursor: pointer; }
+.btn { padding: 0.5rem; margin: 0 0.25rem; border: 1px solid #e2e8f0; background: white; cursor: pointer; transition: all 0.3s ease; }
+.btn:hover { background: #f3f4f6; transform: translateY(-1px); }
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Loading Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Enhanced Dropdown */
+.dropdown-content {
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.dropdown-option {
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.dropdown-option:hover {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    color: #1e40af;
+    transform: translateX(5px);
+}
+
+/* Enhanced Form Elements */
+input:focus, select:focus {
+    transform: translateY(-2px);
+}
+
+/* Footer Accordion Animation */
+#all-links {
+    max-width: 100%;
+}
+
+#all-links > div {
+    width: 100%;
+    max-width: 100%;
+}
+
+#all-links .hidden {
+    transition: all 0.3s ease;
+    overflow: hidden;
+    max-height: 0;
+}
+
+#all-links .hidden.show {
+    max-height: 500px;
+}
+
+#all-links .hidden li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
+}
+
+#all-links .hidden li:hover {
+    background: rgba(255,255,255,0.05);
+    padding-left: 1rem;
+}
+
+#all-links .hidden li a {
+    display: block;
+    padding: 0.25rem 0;
+}
+
+#all-links .hidden li a:hover {
+    color: #fbbf24;
+    text-decoration: underline;
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus Indicators */
+button:focus, input:focus, select:focus, a:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    #main-header, #socials, #all-links, #sponsors {
+        display: none;
+    }
+    
+    #ticket-booking {
+        background: white;
+        color: black;
+    }
+}

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test DISHA Voice Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .voice-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            font-size: 2rem;
+            cursor: pointer;
+            margin: 20px;
+            transition: all 0.3s ease;
+        }
+        .voice-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+        .voice-btn.calling {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .status.ready {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status.calling {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+        .console-log {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🎤 DISHA Voice Assistant Test</h1>
+        
+        <div id="status" class="status ready">
+            Ready to call DISHA
+        </div>
+        
+        <button id="voiceBtn" class="voice-btn" onclick="toggleCall()">
+            🎤
+        </button>
+        
+        <p><strong>Instructions:</strong></p>
+        <ul style="text-align: left;">
+            <li>Click the microphone to start a voice call with DISHA</li>
+            <li>Speak naturally about railway/IRCTC topics</li>
+            <li>Click again to end the call</li>
+            <li>Check console logs below for technical details</li>
+        </ul>
+        
+        <div id="console" class="console-log">
+            Console logs will appear here...
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest/dist/index.js"></script>
+    <script>
+        let vapi = null;
+        let isCallActive = false;
+        const publicKey = 'a4e52b1b-a945-4d62-92ba-69a11ee1e534';
+        const assistantId = '332aec6c-c0ba-4858-850b-aea343165fbd';
+
+        // Console logging
+        function logToConsole(message) {
+            const consoleDiv = document.getElementById('console');
+            const timestamp = new Date().toLocaleTimeString();
+            consoleDiv.innerHTML += `[${timestamp}] ${message}\n`;
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+            console.log(message);
+        }
+
+        // Initialize Vapi
+        function initVapi() {
+            try {
+                vapi = new window.Vapi(publicKey);
+                
+                vapi.on('call-start', () => {
+                    logToConsole('📞 Call started with DISHA');
+                    isCallActive = true;
+                    updateUI(true);
+                });
+
+                vapi.on('call-end', () => {
+                    logToConsole('📞 Call ended');
+                    isCallActive = false;
+                    updateUI(false);
+                });
+
+                vapi.on('speech-start', () => {
+                    logToConsole('🎤 User started speaking');
+                });
+
+                vapi.on('speech-end', () => {
+                    logToConsole('🎤 User stopped speaking');
+                });
+
+                vapi.on('message', (message) => {
+                    logToConsole('💬 Message: ' + JSON.stringify(message));
+                });
+
+                vapi.on('error', (error) => {
+                    logToConsole('❌ Error: ' + error.message);
+                    isCallActive = false;
+                    updateUI(false);
+                });
+
+                logToConsole('✅ Vapi initialized successfully');
+            } catch (error) {
+                logToConsole('❌ Failed to initialize Vapi: ' + error.message);
+            }
+        }
+
+        function updateUI(calling) {
+            const voiceBtn = document.getElementById('voiceBtn');
+            const status = document.getElementById('status');
+            
+            if (calling) {
+                voiceBtn.classList.add('calling');
+                voiceBtn.innerHTML = '📞';
+                status.textContent = 'Connected to DISHA - Speak now!';
+                status.className = 'status calling';
+            } else {
+                voiceBtn.classList.remove('calling');
+                voiceBtn.innerHTML = '🎤';
+                status.textContent = 'Ready to call DISHA';
+                status.className = 'status ready';
+            }
+        }
+
+        async function toggleCall() {
+            if (!vapi) {
+                logToConsole('❌ Vapi not initialized');
+                return;
+            }
+
+            if (isCallActive) {
+                logToConsole('📞 Ending call...');
+                vapi.stop();
+            } else {
+                try {
+                    logToConsole('📞 Starting call with DISHA...');
+                    await vapi.start(assistantId);
+                } catch (error) {
+                    logToConsole('❌ Failed to start call: ' + error.message);
+                }
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            logToConsole('🚀 Initializing DISHA Voice Test...');
+            initVapi();
+        });
+    </script>
+</body>
+</html>

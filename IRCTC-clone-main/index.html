@@ -4,9 +4,159 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/0de0529c5f.js" crossorigin="anonymous"></script>
+    <script>
+        let isHindi = false;
+        const translations = {
+            // Header
+            'LOGIN': 'लॉगिन',
+            'REGISTER': 'पंजीकरण',
+            'AGENT LOGIN': 'एजेंट लॉगिन',
+            'CONTACT US': 'संपर्क करें',
+            'ASK DISHA': 'दिशा से पूछें',
+            'ALERTS': 'अलर्ट',
+            // Navigation
+            'IRCTC EXCLUSIVE': 'आईआरसीटीसी विशेष',
+            'TRAINS': 'ट्रेनें',
+            'BUSES': 'बसें',
+            'FLIGHTS': 'फ्लाइट्स',
+            'HOTELS': 'होटल',
+            'HOLIDAYS': 'छुट्टियां',
+            'LOYALTY': 'वफादारी',
+            'MEALS': 'भोजन',
+            'PROMOTIONS': 'प्रचार',
+            'MORE': 'और',
+            // Form
+            'PNR STATUS': 'पीएनआर स्थिति',
+            'CHARTS/VACANCY': 'चार्ट/रिक्ति',
+            'BOOK TICKET': 'टिकट बुक करें',
+            'Search Trains': 'ट्रेन खोजें',
+            'DISHA Assistant': 'दिशा सहायक',
+            // Main headings
+            'INDIAN RAILWAYS': 'भारतीय रेल',
+            'Safety | Security | Punctuality': 'सुरक्षा | सुरक्षा | समयबद्धता',
+            // Service section
+            'Have you not found the right one?': 'क्या आपको सही विकल्प नहीं मिला?',
+            'Find a service suitablel for you here.': 'यहाँ अपने लिए उपयुक्त सेवा खोजें।',
+            'HOLIDAYS': 'छुट्टियां',
+            // Footer sections
+            'IRCTC Trains': 'आईआरसीटीसी ट्रेनें',
+            'How To': 'कैसे करें',
+            'IRCTC eWallet': 'आईआरसीटीसी ई-वॉलेट',
+            'For Newly Migrated Agents': 'नए माइग्रेटेड एजेंट्स के लिए',
+            'General Information': 'सामान्य जानकारी',
+            'IRCTC Official App': 'आईआरसीटीसी आफिशियल ऐप',
+            'IRCTC Loyalty Program': 'आईआरसीटीसी वफादारी प्रोग्राम',
+            'Mobile Zone': 'मोबाइल ज़ोन',
+            'Important Information': 'महत्वपूर्ण जानकारी',
+            'Advertise with us': 'हमारे साथ विज्ञापन',
+            'IRCTC-iPAY Payment Gateway': 'आईआरसीटीसी-आईपे पेमेंट गेटवे',
+            'Policies': 'नीतियां',
+            'Agents': 'एजेंट्स',
+            'Refund Rules': 'रिफंड नियम',
+            'IRCTC Zone': 'आईआरसीटीसी ज़ोन',
+            'Ask Disha ChatBot': 'दिशा चैटबॉट से पूछें',
+            'Enquiries': 'पूछताछ',
+            'Person With Disability Facilities': 'दिव्यांग सुविधाएं',
+            'About us': 'हमारे बारे में'
+        };
+        
+        function toggleHindi() {
+            isHindi = !isHindi;
+            const hindiBtn = document.querySelector('.hindi-btn');
+            if (hindiBtn) {
+                hindiBtn.textContent = isHindi ? 'English' : 'हिन्दी';
+            }
+            
+            // Translate all elements
+            const elements = document.querySelectorAll('#links1 a, #links2 span, #links2 a, .dropdown-option, #service header h1, #holidays header h1, #all-links li[onclick]');
+            elements.forEach(el => {
+                const text = el.textContent.replace(/▾|▴/g, '').trim();
+                if (text && translations[text]) {
+                    if (isHindi) {
+                        el.setAttribute('data-original', text);
+                        if (el.querySelector('span')) {
+                            const arrow = el.textContent.includes('▴') ? '▴' : '▾';
+                            const spanId = el.querySelector('span').id;
+                            el.innerHTML = translations[text] + '<span id="' + spanId + '">' + arrow + '</span>';
+                        } else {
+                            el.textContent = translations[text];
+                        }
+                    } else if (!isHindi && el.getAttribute('data-original')) {
+                        if (el.querySelector('span')) {
+                            const arrow = el.textContent.includes('▴') ? '▴' : '▾';
+                            const spanId = el.querySelector('span').id;
+                            el.innerHTML = el.getAttribute('data-original') + '<span id="' + spanId + '">' + arrow + '</span>';
+                        } else {
+                            el.textContent = el.getAttribute('data-original');
+                        }
+                    }
+                }
+            });
+            
+            // Translate form inputs
+            const fromInput = document.getElementById('from');
+            const toInput = document.getElementById('to');
+            if (fromInput && toInput) {
+                if (isHindi) {
+                    fromInput.placeholder = '🚉 प्रस्थान स्टेशन';
+                    toInput.placeholder = '🏁 गंतव्य स्टेशन';
+                } else {
+                    fromInput.placeholder = '🚉 From Station';
+                    toInput.placeholder = '🏁 To Station';
+                }
+            }
+            
+            // Translate buttons
+            const searchBtn = document.querySelector('button[type="submit"]');
+            const dishaBtn = document.querySelector('.disha-btn');
+            if (searchBtn) {
+                const text = searchBtn.textContent.replace('🔍 ', '').trim();
+                if (isHindi && translations[text]) {
+                    searchBtn.textContent = '🔍 ' + translations[text];
+                } else if (!isHindi) {
+                    searchBtn.textContent = '🔍 Search Trains';
+                }
+            }
+            if (dishaBtn) {
+                const text = dishaBtn.textContent.replace('🤖 ', '').trim();
+                if (isHindi && translations[text]) {
+                    dishaBtn.textContent = '🤖 ' + translations[text];
+                } else if (!isHindi) {
+                    dishaBtn.textContent = '🤖 DISHA Assistant';
+                }
+            }
+            
+            const bookingTitle = document.querySelector('#form h2');
+            if (bookingTitle) {
+                const text = bookingTitle.textContent.replace('🎫 ', '').trim();
+                if (isHindi && translations[text]) {
+                    bookingTitle.textContent = '🎫 ' + translations[text];
+                } else if (!isHindi) {
+                    bookingTitle.textContent = '🎫 BOOK TICKET';
+                }
+            }
+            
+            const railwayHeading = document.querySelector('#ticket-booking-heading h1');
+            if (railwayHeading) {
+                const text = railwayHeading.textContent.trim();
+                if (isHindi && translations[text]) {
+                    railwayHeading.textContent = translations[text];
+                } else if (!isHindi) {
+                    railwayHeading.textContent = 'INDIAN RAILWAYS';
+                }
+            }
+        }
+    </script>
+    <script src="./error-handler.js"></script>
+    <script src="./auto-allow-mic.js"></script>
+    <script src="./auto-mic-setup.js"></script>
+    <script src="./mic-permission.js"></script>
+    <script src="./dropdown-fix.js"></script>
     <script src="./javas.js"></script>
+    <script src="./footer-links.js"></script>
     <link rel="icon" href="./images/titlepage logo.png" type="image/icon type">
     <link rel="stylesheet" type="text/css" href="./style.css">
+    <link rel="stylesheet" type="text/css" href="./mobile-fixes.css">
     <title>IRCTC Next Generation eTicketing System</title>
 </head>
 <body>
@@ -15,11 +165,11 @@
         <div id="linklists" style="display: flex; flex-direction: column; gap: 0.1rem; flex-grow: 1; max-width: 900px; margin: 0 1rem;">
             <div id="links1" style="display: flex; justify-content: center;">
                 <ul class="horizontal-list center" style="display: flex; flex-wrap: wrap; gap: 0.2rem; margin: 0; padding: 0; list-style: none; justify-content: center; max-width: 100%;">
-                    <li class="blue-bold" style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="#">LOGIN</a></li>
+                    <li class="blue-bold" style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="https://www.irctc.co.in/nget/profile/user-login">LOGIN</a></li>
                     <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="https://www.irctc.co.in/nget/profile/user-registration">REGISTER</a></li>
                     <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="https://agent.irctc.co.in/nget/train-search">AGENT LOGIN</a></li>
-                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="#">CONTACT US</a></li>
-                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="#">ASK DISHA</a></li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="https://www.irctc.co.in/nget/feedback">CONTACT US</a></li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="./ask-disha.html" style="cursor: pointer;">ASK DISHA</a></li>
                     <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="https://www.irctc.co.in/nget/enquiry/alerts"><strong>ALERTS</strong></a></li>
                     <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;">  
                         <span id="datetime" style="font-weight: bold;"></span>
@@ -30,7 +180,7 @@
                         <button class="btn" onclick="resetFontSize()" style="font-size: 0.8rem; padding: 0.1rem 0.3rem; margin: 0 0.1rem;">A</button>
                         <button class="btn" onclick="increaseFontSize()" style="font-size: 0.8rem; padding: 0.1rem 0.3rem; margin: 0 0.1rem;">A+</button>
                     </li>
-                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><button class="btn" style="font-size: 0.85rem; padding: 0.1rem 0.3rem;">हिन्दी</button></li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><button class="btn hindi-btn" onclick="toggleHindi()" style="font-size: 0.85rem; padding: 0.1rem 0.3rem;">हिन्दी</button></li>
                 </ul>
             </div>
             <div id="links2" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 0.15rem;">
@@ -40,23 +190,23 @@
                 <div class="dropdown">
                     <span class="blue-bold" style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">IRCTC EXCLUSIVE</span>
                     <div class="dropdown-content">
-                        <div class="dropdown-option">IRCTC eWallet</div>
-                        <div class="dropdown-option">IRCTC-iPAY</div>
-                        <div class="dropdown-option">e-Gift Vouchers</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/profile/user-registration', '_blank')">IRCTC eWallet</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctcpay.com/', '_blank')">IRCTC-iPAY</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/gift-voucher', '_blank')">e-Gift Vouchers</div>
                     </div>
                 </div>
                 <div class="dropdown">
                     <span class="orange-underline" style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">TRAINS</span>
                     <div class="dropdown-content">
-                        <div class="dropdown-option">Book Ticket</div>
-                        <div class="dropdown-option">Foreign Tourist Booking</div>
-                        <div class="dropdown-option">Connecting Journey Booking</div>
-                        <div class="dropdown-option">IRCTC Trains</div>
-                        <div class="dropdown-option">Cancel Ticket</div>
-                        <div class="dropdown-option">PNR Enquiry</div>
-                        <div class="dropdown-option">Train Schedule</div>
-                        <div class="dropdown-option">Track Your Train</div>
-                        <div class="dropdown-option">FTR Coach/Train Booking</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/train-search', '_blank')">Book Ticket</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/booking/foreign-tourist', '_blank')">Foreign Tourist Booking</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/booking/connecting-journey', '_blank')">Connecting Journey Booking</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/train-list', '_blank')">IRCTC Trains</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/booking/cancel-ticket', '_blank')">Cancel Ticket</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.indianrail.gov.in/enquiry/PNR/PnrEnquiry.html', '_blank')">PNR Enquiry</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.indianrail.gov.in/enquiry/TrainRoute/TrainRoute.html', '_blank')">Train Schedule</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.indianrail.gov.in/enquiry/LiveStation/LiveStation.html', '_blank')">Track Your Train</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.ftr.irctc.co.in/ftr/', '_blank')">FTR Coach/Train Booking</div>
                     </div>
                 </div>
                 <div class="dropdown">
@@ -71,44 +221,46 @@
                 <div class="dropdown">
                     <span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">HOLIDAYS</span>
                     <div class="dropdown-content">
-                        <div class="dropdown-option">Tourist Trains</div>
-                        <div class="dropdown-option">Tour Packages</div>
-                        <div class="dropdown-option">Stays</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctctourism.com/bharatgaurav', '_blank')">Tourist Trains</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctctourism.com/tourpacakage_search', '_blank')">Tour Packages</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.hotel.irctctourism.com/hotel', '_blank')">Stays</div>
                     </div>
                 </div>
                 <div class="dropdown">
                     <span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">LOYALTY</span>
                     <div class="dropdown-content">
-                        <div class="dropdown-option">IRCTC SBI Credit Card</div>
-                        <div class="dropdown-option">IRCTC BOB Credit Card</div>
-                        <div class="dropdown-option">IRCTC HDFC Credit Card</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.sbicard.com/en/personal/credit-cards/lifestyle/irctc-sbi-card.page', '_blank')">IRCTC SBI Credit Card</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.bobfinancial.com/credit-card/irctc-bob-rupay-credit-card.html', '_blank')">IRCTC BOB Credit Card</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.hdfcbank.com/personal/pay/cards/credit-cards/irctc-hdfc-bank-credit-card', '_blank')">IRCTC HDFC Credit Card</div>
                     </div>
                 </div>
                 <div class="dropdown">
                     <span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">MEALS</span>
                     <div class="dropdown-content">
-                        <div class="dropdown-option">Order Food - E-Catering</div>
-                        <div class="dropdown-option">Cooked Food Menu</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.ecatering.irctc.co.in/', '_blank')">Order Food - E-Catering</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.ecatering.irctc.co.in/menu', '_blank')">Cooked Food Menu</div>
                     </div>
                 </div>
                 <div class="dropdown">
                     <span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">PROMOTIONS</span>
                     <div class="dropdown-content">
-                        <div class="dropdown-option">Suboption </div>
-                        <div class="dropdown-option">Suboption </div>
-                        <div class="dropdown-option">Suboption </div>
-                        <div class="dropdown-option">Suboption </div>
-                        <div class="dropdown-option">Suboption </div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/offers', '_blank')">Current Offers</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/seasonal-offers', '_blank')">Seasonal Offers</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/bank-offers', '_blank')">Bank Offers</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/cashback', '_blank')">Cashback Offers</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/discount-coupons', '_blank')">Discount Coupons</div>
                     </div>
                 </div>
                 <div class="dropdown">
                     <span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">MORE</span>
                     <div class="dropdown-content">
-                        <div class="dropdown-option">Suboption </div>
-                        <div class="dropdown-option">Suboption </div>
-                        <div class="dropdown-option">Suboption </div>
-                        <div class="dropdown-option">Suboption </div>
-                        <div class="dropdown-option">Suboption </div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/train-between-stations', '_blank')">Trains Between Stations</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.indianrail.gov.in/enquiry/Fare/Fare.html', '_blank')">Fare Enquiry</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/booking-history', '_blank')">Booking History</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/refund-status', '_blank')">Refund Status</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/retiring-rooms', '_blank')">Retiring Rooms</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/lounge-booking', '_blank')">Lounge Booking</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/parcel-booking', '_blank')">Parcel Booking</div>
                     </div>
                 </div>
             </div>
@@ -134,7 +286,7 @@
                     <h2>🎫 BOOK TICKET</h2>
                     <img src="https://www.irctc.co.in/nget/assets/images/G20_Logo.png" alt="g2 logo" style="height: 40px;">
                 </header>
-                <form method="get" action="#">
+                <form method="get" action="./train-results.html" onsubmit="return handleSearch(event)">
                     <div>
                     <input id="from" name="from" type="text" placeholder="🚉 From Station" class="leftbox" autofocus>
                     <input id="to" name="to" type="text" placeholder="🏁 To Station" class="leftbox">
@@ -172,14 +324,11 @@
                 </div>
                 <div id="buttons">
                     <button type="submit">🔍 Search Trains</button>
-                    <button type="button">🤖 Ask DISHA 2.0</button> 
+                    <button type="button" onclick="window.location.href='./ask-disha.html'" class="disha-btn">🤖 DISHA Assistant</button>
                 </div>
                 </form>
             </main>
-            <div id="note">
-                <p id="p1">Customers are requested to contact only on IRCTC's authorised contact no./Email id (Contact No.:14646 OR 0755-6610661 / 0755-4090600, Email: care@irctc.co.in), for assistance regarding ticket booking, refund or forgot user-id/password. Beware of fraudulent sites offering assistance.</p>
-                <p id="p2">Please check the alert section regarding restoration of AC 3-tier economy fare.</p>
-            </div>
+
         </div>
         <div id="ticket-booking-heading">
             <h1>INDIAN RAILWAYS</h1>

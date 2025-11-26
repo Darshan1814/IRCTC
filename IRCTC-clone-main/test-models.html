@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Gemini Models</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; padding: 20px; }
+        .result { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d1fae5; color: #065f46; }
+        .error { background: #fef2f2; color: #991b1b; }
+        .testing { background: #fef3c7; color: #92400e; }
+        button { background: #3b82f6; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #1e40af; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Gemini Models Test</h1>
+    <p>Testing all available Gemini models with your API key</p>
+    <button onclick="testAllModels()">Test All Models</button>
+    <button onclick="testVoice()">Test Voice Output</button>
+    <div id="results"></div>
+
+    <script>
+        const apiKey = 'AIzaSyAswBs9lfrNTH2SO_Aw75PjrW8ByFRVOgk';
+        const models = [
+            'gemini-2.0-flash-exp',
+            'gemini-1.5-flash',
+            'gemini-1.5-flash-8b',
+            'gemini-1.5-pro',
+            'gemini-1.5-flash-latest',
+            'gemini-1.5-pro-latest',
+            'gemini-pro'
+        ];
+        const baseUrl = 'https://generativelanguage.googleapis.com/v1beta/models';
+
+        function log(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `result ${type}`;
+            div.innerHTML = `[${new Date().toLocaleTimeString()}] ${message}`;
+            results.appendChild(div);
+            console.log(message);
+        }
+
+        async function testModel(model) {
+            const requestBody = {
+                contents: [{
+                    parts: [{
+                        text: 'How do I book a train ticket on IRCTC? Give a brief answer.'
+                    }]
+                }],
+                generationConfig: {
+                    temperature: 0.7,
+                    maxOutputTokens: 100,
+                }
+            };
+
+            try {
+                log(`🧪 Testing ${model}...`, 'testing');
+                const response = await fetch(`${baseUrl}/${model}:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                        const text = data.candidates[0].content.parts[0].text;
+                        log(`✅ ${model}: SUCCESS - "${text.substring(0, 80)}..."`, 'success');
+                        return { model, success: true, response: text };
+                    }
+                }
+                log(`❌ ${model}: Failed with status ${response.status}`, 'error');
+                return { model, success: false, status: response.status };
+            } catch (error) {
+                log(`❌ ${model}: Error - ${error.message}`, 'error');
+                return { model, success: false, error: error.message };
+            }
+        }
+
+        async function testAllModels() {
+            document.getElementById('results').innerHTML = '';
+            log('🚀 Starting Gemini models test...');
+            
+            const results = [];
+            for (const model of models) {
+                const result = await testModel(model);
+                results.push(result);
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+            
+            const working = results.filter(r => r.success);
+            log(`\n📊 Summary: ${working.length}/${models.length} models working`, working.length > 0 ? 'success' : 'error');
+            
+            if (working.length > 0) {
+                log(`✅ Working models: ${working.map(r => r.model).join(', ')}`, 'success');
+            }
+        }
+
+        function testVoice() {
+            if ('speechSynthesis' in window) {
+                const text = 'Hello! I am DISHA, your IRCTC voice assistant. I can help you with train bookings and railway information.';
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-IN';
+                utterance.rate = 1.0;
+                
+                const voices = window.speechSynthesis.getVoices();
+                const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google'));
+                if (femaleVoice) utterance.voice = femaleVoice;
+                
+                utterance.onstart = () => log('🔊 Voice test started...', 'testing');
+                utterance.onend = () => log('✅ Voice test completed!', 'success');
+                utterance.onerror = (e) => log(`❌ Voice error: ${e.error}`, 'error');
+                
+                window.speechSynthesis.speak(utterance);
+                log(`🎤 Available voices: ${voices.length}`, 'info');
+            } else {
+                log('❌ Speech synthesis not supported', 'error');
+            }
+        }
+
+        // Auto-test on load
+        window.addEventListener('load', () => {
+            log('🔧 Gemini Models Tester loaded');
+            setTimeout(testAllModels, 500);
+        });
+    </script>
+</body>
+</html>

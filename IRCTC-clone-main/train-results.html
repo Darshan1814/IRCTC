@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/0de0529c5f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <link rel="stylesheet" type="text/css" href="./mobile-fixes.css">
+    <title>Train Search Results - IRCTC</title>
+    <style>
+        .results-container {
+            max-width: 1400px;
+            margin: 100px auto 2rem;
+            padding: 2rem;
+        }
+        .filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            border-color: #3b82f6;
+        }
+        #trainList {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .search-summary {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .train-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: slideIn 0.5s ease-out backwards;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .train-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .train-header {
+            margin-bottom: 0.75rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.75rem;
+        }
+        .train-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e40af;
+        }
+        .train-name {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 0.25rem;
+        }
+        .train-timing {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0.75rem 0;
+            gap: 0.5rem;
+        }
+        .time-box {
+            text-align: center;
+            flex: 1;
+        }
+        .time {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e40af;
+        }
+        .station {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.15rem;
+        }
+        .duration {
+            text-align: center;
+            color: #10b981;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        .train-details {
+            margin-top: auto;
+            padding-top: 0.75rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        .availability {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.75rem;
+        }
+        .class-badge {
+            padding: 0.35rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .available {
+            background: #d1fae5;
+            color: #059669;
+        }
+        .waiting {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .book-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+        }
+        @media (max-width: 1200px) {
+            #trainList {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .results-container {
+                margin: 120px 1rem 1rem;
+                padding: 1rem;
+            }
+            #trainList {
+                grid-template-columns: 1fr;
+            }
+            .filter-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .filter-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="main-header">
+        <div id="img1"><img src="https://www.irctc.co.in/nget/assets/images/secondry-logo.png" alt="irctc logo"></div>
+        <div id="linklists" style="display: flex; flex-direction: column; gap: 0.1rem; flex-grow: 1; max-width: 900px; margin: 0 1rem;">
+            <div id="links1" style="display: flex; justify-content: center;">
+                <ul class="horizontal-list center" style="display: flex; flex-wrap: wrap; gap: 0.2rem; margin: 0; padding: 0; list-style: none; justify-content: center; max-width: 100%;">
+                    <li class="blue-bold" style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="https://www.irctc.co.in/nget/profile/user-login">LOGIN</a></li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="https://www.irctc.co.in/nget/profile/user-registration">REGISTER</a></li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="https://agent.irctc.co.in/nget/train-search">AGENT LOGIN</a></li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="https://www.irctc.co.in/nget/feedback">CONTACT US</a></li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="./ask-disha.html">ASK DISHA</a></li>
+                    <li style="background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.85rem;"><a href="https://www.irctc.co.in/nget/enquiry/alerts"><strong>ALERTS</strong></a></li>
+                </ul>
+            </div>
+            <div id="links2" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 0.15rem;">
+                <div class="dropdown">
+                    <a href="./index.html"><span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;"><i class="fa-solid fa-house"></i></span></a>
+                </div>
+                <div class="dropdown">
+                    <span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">TRAINS</span>
+                    <div class="dropdown-content">
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/train-search', '_blank')">Book Ticket</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.indianrail.gov.in/enquiry/PNR/PnrEnquiry.html', '_blank')">PNR Enquiry</div>
+                        <div class="dropdown-option" onclick="window.open('https://www.irctc.co.in/nget/booking/cancel-ticket', '_blank')">Cancel Ticket</div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="https://www.bus.irctc.co.in/home" target="_blank"><span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">BUSES</span></a>
+                </div>
+                <div class="dropdown">
+                    <a href="https://www.air.irctc.co.in/" target="_blank"><span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">FLIGHTS</span></a>
+                </div>
+                <div class="dropdown">
+                    <a href="https://www.hotel.irctctourism.com/hotel" target="_blank"><span style="color: white; padding: 0.15rem 0.4rem; border-radius: 8px; font-size: 0.85rem;">HOTELS</span></a>
+                </div>
+            </div>
+        </div>
+        <div id="img2"><img src="https://www.irctc.co.in/nget/assets/images/logo.png" alt="irctc logo"></div>
+    </header>
+
+    <div class="results-container">
+        <div class="search-summary">
+            <h2 style="margin-bottom: 1rem;">🚂 Available Trains</h2>
+            <p><strong>From:</strong> <span id="fromStation">Mumbai Central</span> → <strong>To:</strong> <span id="toStation">New Delhi</span></p>
+            <p><strong>Date:</strong> <span id="travelDate">26-11-2025</span> | <strong>Class:</strong> <span id="travelClass">All Classes</span></p>
+        </div>
+
+        <div class="filters">
+            <h3 style="margin-bottom: 1rem; color: #1e40af;">🔍 Filter Trains</h3>
+            <div class="filter-group">
+                <strong>Departure Time:</strong>
+                <button class="filter-btn active" onclick="filterByTime('all')">All Trains</button>
+                <button class="filter-btn" onclick="filterByTime('morning')">Morning (6AM-12PM)</button>
+                <button class="filter-btn" onclick="filterByTime('afternoon')">Afternoon (12PM-6PM)</button>
+                <button class="filter-btn" onclick="filterByTime('evening')">Evening (6PM-12AM)</button>
+                <button class="filter-btn" onclick="filterByTime('night')">Night (12AM-6AM)</button>
+            </div>
+        </div>
+
+        <div id="trainList"></div>
+    </div>
+
+    <script src="./javas.js"></script>
+    <script src="./footer-links.js"></script>
+    <script src="./train-data.js"></script>
+</body>
+</html>

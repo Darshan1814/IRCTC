@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Gemini API</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        .test-btn { background: #3b82f6; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        .result { background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 10px 0; }
+        .success { background: #d1fae5; color: #065f46; }
+        .error { background: #fef2f2; color: #991b1b; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Gemini API Test</h1>
+    <button class="test-btn" onclick="testAllModels()">Test All Models</button>
+    <button class="test-btn" onclick="testRailwayQuery()">Test Railway Query</button>
+    <div id="results"></div>
+
+    <script>
+        const apiKey = 'AIzaSyAswBs9lfrNTH2SO_Aw75PjrW8ByFRVOgk';
+        const models = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro'];
+        const baseUrl = 'https://generativelanguage.googleapis.com/v1beta/models';
+
+        function log(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `result ${type}`;
+            div.innerHTML = `[${new Date().toLocaleTimeString()}] ${message}`;
+            results.appendChild(div);
+            console.log(message);
+        }
+
+        async function testModel(model, message) {
+            const requestBody = {
+                contents: [{
+                    parts: [{
+                        text: message
+                    }]
+                }],
+                generationConfig: {
+                    temperature: 0.7,
+                    maxOutputTokens: 100,
+                }
+            };
+
+            try {
+                const response = await fetch(`${baseUrl}/${model}:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                        log(`✅ ${model}: SUCCESS - ${data.candidates[0].content.parts[0].text.substring(0, 50)}...`, 'success');
+                        return true;
+                    }
+                }
+                log(`❌ ${model}: Failed with status ${response.status}`, 'error');
+                return false;
+            } catch (error) {
+                log(`❌ ${model}: Error - ${error.message}`, 'error');
+                return false;
+            }
+        }
+
+        async function testAllModels() {
+            log('🚀 Testing all Gemini models...');
+            const testMessage = 'Hello, how do I book a train ticket on IRCTC?';
+            
+            for (const model of models) {
+                await testModel(model, testMessage);
+            }
+            log('✅ Model testing complete!');
+        }
+
+        async function testRailwayQuery() {
+            log('🚂 Testing railway-specific query...');
+            const railwayQuery = 'What is PNR status and how do I check it?';
+            
+            for (const model of models) {
+                const success = await testModel(model, railwayQuery);
+                if (success) break; // Stop at first working model
+            }
+        }
+
+        // Auto-test on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            log('🔧 Gemini API Tester loaded');
+            testAllModels();
+        });
+    </script>
+</body>
+</html>

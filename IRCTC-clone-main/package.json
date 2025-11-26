@@ -1,0 +1,30 @@
+{
+  "name": "irctc-disha-chatbot",
+  "version": "1.0.0",
+  "description": "IRCTC Ask DISHA AI Chatbot with Gemini API integration",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 server.py",
+    "serve": "python3 -m http.server 8000",
+    "test": "echo 'Open http://localhost:8000/test-chatbot.html to test the chatbot'"
+  },
+  "keywords": [
+    "irctc",
+    "chatbot",
+    "gemini-api",
+    "voice-recognition",
+    "railway",
+    "ai-assistant"
+  ],
+  "author": "IRCTC Development Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-repo/irctc-disha-chatbot"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "python": ">=3.6"
+  }
+}

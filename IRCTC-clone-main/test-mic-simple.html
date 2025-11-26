@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Microphone Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .mic-btn {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            margin: 20px;
+            transition: all 0.3s ease;
+        }
+        .mic-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+        .mic-btn.active {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .status.success { background: #d1fae5; color: #065f46; }
+        .status.error { background: #fef2f2; color: #991b1b; }
+        .status.info { background: #eff6ff; color: #1e40af; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎤 Microphone Test</h1>
+        <p>Test if your microphone works for DISHA voice assistant</p>
+        
+        <button id="micBtn" class="mic-btn" onclick="testMicrophone()">🎤</button>
+        
+        <div id="status" class="status info">
+            Click the microphone to test
+        </div>
+        
+        <div id="instructions">
+            <h3>Instructions:</h3>
+            <ol style="text-align: left;">
+                <li>Click the microphone button</li>
+                <li>Allow permission when prompted</li>
+                <li>Speak into your microphone</li>
+                <li>Check if it detects your voice</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        let isRecording = false;
+        let recognition = null;
+        let stream = null;
+
+        function updateStatus(message, type = 'info') {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+
+        function updateButton(active) {
+            const btn = document.getElementById('micBtn');
+            if (active) {
+                btn.classList.add('active');
+                btn.textContent = '🛑';
+            } else {
+                btn.classList.remove('active');
+                btn.textContent = '🎤';
+            }
+        }
+
+        async function testMicrophone() {
+            if (isRecording) {
+                stopRecording();
+                return;
+            }
+
+            try {
+                updateStatus('Requesting microphone permission...', 'info');
+                
+                // Request microphone access
+                stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                updateStatus('✅ Microphone permission granted!', 'success');
+                
+                // Test speech recognition if available
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    startSpeechRecognition();
+                } else {
+                    updateStatus('✅ Microphone works! (Speech recognition not available)', 'success');
+                    setTimeout(() => {
+                        stopRecording();
+                    }, 3000);
+                }
+                
+            } catch (error) {
+                handleError(error);
+            }
+        }
+
+        function startSpeechRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+            
+            recognition.onstart = () => {
+                isRecording = true;
+                updateButton(true);
+                updateStatus('🎤 Listening... Say something!', 'info');
+            };
+            
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                updateStatus(`✅ Heard: "${transcript}"`, 'success');
+                setTimeout(() => {
+                    stopRecording();
+                }, 2000);
+            };
+            
+            recognition.onerror = (event) => {
+                if (event.error === 'no-speech') {
+                    updateStatus('No speech detected. Try speaking louder.', 'error');
+                } else {
+                    updateStatus(`Speech recognition error: ${event.error}`, 'error');
+                }
+                stopRecording();
+            };
+            
+            recognition.onend = () => {
+                if (isRecording) {
+                    updateStatus('✅ Microphone test complete!', 'success');
+                    stopRecording();
+                }
+            };
+            
+            recognition.start();
+        }
+
+        function stopRecording() {
+            isRecording = false;
+            updateButton(false);
+            
+            if (recognition) {
+                recognition.stop();
+                recognition = null;
+            }
+            
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+        }
+
+        function handleError(error) {
+            let message = '';
+            
+            switch (error.name) {
+                case 'NotAllowedError':
+                    message = '❌ Microphone permission denied. Click 🔒 in address bar to allow.';
+                    break;
+                case 'NotFoundError':
+                    message = '❌ No microphone found. Connect a microphone and try again.';
+                    break;
+                case 'NotReadableError':
+                    message = '❌ Microphone is busy. Close other apps and try again.';
+                    break;
+                default:
+                    message = `❌ Error: ${error.message}`;
+            }
+            
+            updateStatus(message, 'error');
+            stopRecording();
+        }
+
+        // Auto-test on page load if permission already granted
+        window.addEventListener('load', async () => {
+            try {
+                if (navigator.permissions) {
+                    const permission = await navigator.permissions.query({ name: 'microphone' });
+                    if (permission.state === 'granted') {
+                        updateStatus('✅ Microphone permission already granted!', 'success');
+                    }
+                }
+            } catch (e) {
+                // Ignore permission query errors
+            }
+        });
+    </script>
+</body>
+</html>

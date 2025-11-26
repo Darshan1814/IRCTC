@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test DISHA Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #3b82f6;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .test-button:hover {
+            background: #1e40af;
+        }
+        .info {
+            background: #eff6ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .warning {
+            background: #fef3c7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #f59e0b;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🤖 IRCTC DISHA Chatbot Test Page</h1>
+        
+        <div class="info">
+            <h3>📋 Test Instructions</h3>
+            <p>This page helps you test the DISHA chatbot functionality:</p>
+            <ul>
+                <li>Click "Open Chatbot" to test the chatbot interface</li>
+                <li>Try voice input by clicking the microphone button</li>
+                <li>Test quick action buttons</li>
+                <li>Verify API responses</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <h3>⚠️ Important Notes</h3>
+            <ul>
+                <li>The chatbot only responds to railway/IRCTC related queries</li>
+                <li>Voice recognition works best in Chrome browser</li>
+                <li>Make sure to allow microphone permissions</li>
+                <li>API key is configured for this domain only</li>
+            </ul>
+        </div>
+
+        <h3>🚀 Test Actions</h3>
+        <a href="./ask-disha.html" class="test-button">Open Chatbot</a>
+        <a href="./index.html" class="test-button">Back to Main Site</a>
+        
+        <h3>📝 Sample Test Queries</h3>
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <p><strong>Railway-related queries (should work):</strong></p>
+            <ul>
+                <li>"How do I book a train ticket?"</li>
+                <li>"What is PNR status?"</li>
+                <li>"Tell me about train schedules"</li>
+                <li>"How to cancel a railway ticket?"</li>
+                <li>"What are the different train classes?"</li>
+            </ul>
+        </div>
+
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <p><strong>Non-railway queries (should be redirected):</strong></p>
+            <ul>
+                <li>"What's the weather today?"</li>
+                <li>"Tell me a joke"</li>
+                <li>"How to cook pasta?"</li>
+                <li>"What's the latest news?"</li>
+            </ul>
+        </div>
+
+        <h3>🔧 Technical Details</h3>
+        <div style="background: #f1f5f9; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 14px;">
+            <p><strong>API Endpoint:</strong> Google Gemini Pro</p>
+            <p><strong>API Key:</strong> AIzaSyAswBs9lfrNTH2SO_Aw75PjrW8ByFRVOgk</p>
+            <p><strong>Voice Recognition:</strong> Web Speech API</p>
+            <p><strong>Language:</strong> English (India)</p>
+        </div>
+
+        <h3>📊 Browser Console</h3>
+        <p>Open browser developer tools (F12) to monitor:</p>
+        <ul>
+            <li>API requests and responses</li>
+            <li>Voice recognition events</li>
+            <li>Error messages</li>
+            <li>Network activity</li>
+        </ul>
+    </div>
+
+    <script>
+        // Simple test functions
+        function testAPI() {
+            console.log('Testing Gemini API connection...');
+            // This would be implemented in the actual chatbot
+        }
+
+        function testVoice() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                console.log('✅ Voice recognition supported');
+            } else {
+                console.log('❌ Voice recognition not supported');
+            }
+        }
+
+        // Run tests on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            testVoice();
+            console.log('🤖 DISHA Chatbot Test Page Loaded');
+        });
+    </script>
+</body>
+</html>
