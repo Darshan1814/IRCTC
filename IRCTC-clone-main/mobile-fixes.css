@@ -56,12 +56,12 @@ main, section {
 
 /* Tablets */
 @media (max-width: 768px) {
-    /* Header */
+    /* Header - Let mobile-nav.css handle this */
     #main-header {
-        position: sticky;
+        position: fixed;
         top: 0;
-        padding: 0.5rem;
-        flex-wrap: wrap;
+        padding: 0.5rem 1rem;
+        flex-wrap: nowrap;
     }
     
     #main-header img {
@@ -92,8 +92,8 @@ main, section {
     /* Booking Section */
     #ticket-booking {
         flex-direction: column;
-        margin-top: 80px;
-        padding: 2rem 1rem;
+        margin-top: 60px;
+        padding: 0 1rem 2rem 1rem;
         min-height: auto;
         overflow-x: hidden;
     }
